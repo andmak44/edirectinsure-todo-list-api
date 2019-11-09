@@ -24,7 +24,7 @@ router.post(apiPath + '/task/:projectId', async(req, res) => {
 router.get(apiPath + '/tasks/:projectId', async(req, res) => {
   //Get tasks by project id
   try {
-      const tasks = await Project.findById(req.params.projectId).populate('todoList');
+      const tasks = await Project.findById(req.params.projectId).populate('todoList', '_id name description finished', null, {sort: {'finished': -1}});
       res.send({ tasks: tasks });
   } catch (err) {
       res.status(401).json({ error: err.message });

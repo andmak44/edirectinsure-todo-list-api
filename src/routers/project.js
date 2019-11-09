@@ -28,7 +28,7 @@ router.get(apiPath + '/project/:userId', async(req, res) => {
 router.get(apiPath + '/project/task/:userId', async(req, res) => {
   //Get projects with tasks
   try {
-      const projects = await Project.find({'owner': req.params.userId}).populate('todoList');
+      const projects = await Project.find({'owner': req.params.userId}).populate('todoList', '_id name description finished', null, {sort: {'finished': -1}});
       res.send({ projects: projects });
   } catch (err) {
       res.status(401).json({ error: err.message });
